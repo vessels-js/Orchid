@@ -5,3 +5,4 @@ build-revision
 lib/xmlrpc-*
 .idea/
 Orchid.iml
+/.nb-gradle/
