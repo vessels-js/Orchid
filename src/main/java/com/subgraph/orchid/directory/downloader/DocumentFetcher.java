@@ -18,6 +18,7 @@ public abstract class DocumentFetcher<T> {
 	abstract DocumentParser<T> createParser(ByteBuffer response);
 
 	public List<T> requestDocuments(HttpConnection httpConnection) throws IOException, DirectoryRequestFailedException {
+            System.out.println("httpConnection.getHost(): "+httpConnection.getHost());
 		final ByteBuffer body = makeRequest(httpConnection);
 		if(body.hasRemaining()) {
 			return processResponse(body);
@@ -27,9 +28,10 @@ public abstract class DocumentFetcher<T> {
 	}
 
 	private ByteBuffer makeRequest(HttpConnection httpConnection) throws IOException, DirectoryRequestFailedException {
-		
+		System.out.println("getRequestPath(): "+getRequestPath());
 		httpConnection.sendGetRequest(getRequestPath());
 		httpConnection.readResponse();
+                    System.out.println("httpConnection.getStatusCode(): "+httpConnection.getStatusCode());
 		if(httpConnection.getStatusCode() == 200) {
 			return httpConnection.getMessageBody();
 		}

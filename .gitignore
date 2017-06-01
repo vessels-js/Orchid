@@ -1,8 +1,4 @@
-bin/
-orchid-*.jar
-orchid-*.zip
-build-revision
-lib/xmlrpc-*
-.idea/
-Orchid.iml
 /.nb-gradle/
+/.gradle/
+/build/
+/private/

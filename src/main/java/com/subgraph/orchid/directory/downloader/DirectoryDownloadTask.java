@@ -215,11 +215,14 @@ public class DirectoryDownloadTask implements Runnable {
 		public void run() {
 			try {
 				for(KeyCertificate c: downloader.downloadKeyCertificates(directory.getRequiredCertificates())) {
-					directory.addCertificate(c);
+                                    directory.addCertificate(c);
 				}
 				directory.storeCertificates();
 			} catch (DirectoryRequestFailedException e) {
 				logger.warning("Failed to download key certificates: "+ e.getMessage());
+                            for(StackTraceElement ste : e.getStackTrace()){
+                                System.out.println(ste.toString());
+                            }
 			} finally {
 				isDownloadingCertificates = false;
 			}

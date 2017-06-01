@@ -66,6 +66,15 @@ public class DirectoryServerImpl extends RouterImpl implements DirectoryServer {
 	public HexDigest getV3Identity() {
 		return v3Ident;
 	}
+        
+        public KeyCertificate getCertificateByAuthority(HexDigest fingerprint){
+		for(KeyCertificate kc: getCertificates()) {
+			if(kc.getAuthorityFingerprint().equals(fingerprint)) {
+				return kc;
+			}
+		}
+		return null;            
+        }
 
 	public KeyCertificate getCertificateByFingerprint(HexDigest fingerprint) {
 		for(KeyCertificate kc: getCertificates()) {
@@ -128,6 +137,8 @@ public class DirectoryServerImpl extends RouterImpl implements DirectoryServer {
 	}
 	
 	public void addCertificate(KeyCertificate certificate) {
+            System.out.println(certificate.getAuthorityFingerprint().toString()+"-"+certificate.getAuthoritySigningKey().toString());
+            System.out.println("addCertificate");
 		if(!certificate.getAuthorityFingerprint().equals(v3Ident)) {
 			throw new IllegalArgumentException("This certificate does not appear to belong to this directory authority");
 		}

@@ -17,7 +17,8 @@ public class CertificateFetcher extends DocumentFetcher<KeyCertificate>{
 
 	@Override
 	String getRequestPath() {
-		return "/tor/keys/fp-sk/"+ getRequiredCertificatesRequestString();
+		return "/tor/keys/fp/"+ getRequiredCertificatesRequestString();
+//		return "/tor/keys/fp-sk/"+ getRequiredCertificatesRequestString();
 	}
 
 	private String getRequiredCertificatesRequestString() {
@@ -27,8 +28,8 @@ public class CertificateFetcher extends DocumentFetcher<KeyCertificate>{
 				sb.append("+");
 			}
 			sb.append(rc.getAuthorityIdentity().toString());
-			sb.append("-");
-			sb.append(rc.getSigningKey().toString());
+//			sb.append("-");
+//			sb.append(rc.getSigningKey().toString());
 		}
 		return sb.toString();
 	}

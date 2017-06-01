@@ -16,6 +16,7 @@ public interface DirectoryServer extends Router {
 	boolean isBridgeAuthority();
 	boolean isExtraInfoCache();
 	
+	KeyCertificate getCertificateByAuthority(HexDigest fingerprint);
 	KeyCertificate getCertificateByFingerprint(HexDigest fingerprint);
 	List<KeyCertificate> getCertificates();
 	void addCertificate(KeyCertificate certificate);

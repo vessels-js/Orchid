@@ -65,15 +65,17 @@ public class HttpConnection {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("GET ");
 		sb.append(request);
-		if(useCompression && !request.endsWith(COMPRESSION_SUFFIX)) {
-			sb.append(COMPRESSION_SUFFIX);
-		}
+//		if(useCompression && !request.endsWith(COMPRESSION_SUFFIX)) {
+//			sb.append(COMPRESSION_SUFFIX);
+//		}
 		sb.append(" HTTP/1.0\r\n");
 		if(hostname != null) {
 			sb.append("Host: "+ hostname +"\r\n");
 		}
 		sb.append("\r\n");
-		
+		System.out.println("-----------------");
+		System.out.println(sb.toString());
+		System.out.println("-----------------");
 		final String requestLine = sb.toString();
 		output.write(requestLine.getBytes(CHARSET));
 		output.flush();
