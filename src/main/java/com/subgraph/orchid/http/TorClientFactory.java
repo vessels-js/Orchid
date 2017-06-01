@@ -20,10 +20,12 @@ import com.subgraph.orchid.directory.DocumentFieldParserImpl;
 import com.subgraph.orchid.directory.TrustedAuthorities;
 import com.subgraph.orchid.directory.parsing.DocumentFieldParser;
 import com.subgraph.orchid.directory.parsing.DocumentParsingHandler;
+import com.subgraph.orchid.logging.Logger;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
 public class TorClientFactory {
+    private static final Logger logger = Logger.getInstance(TorClientFactory.class);
     private static final int PROXY_PORT = 9150;
     private static final String PROXY_HOST = "localhost";
     private static TorClient client;
@@ -115,12 +117,12 @@ public class TorClientFactory {
         return new TorInitializationListener() {
             @Override
             public void initializationProgress(String message, int percent) {
-                System.out.println(">>> [ " + percent + "% ]: " + message);
+                logger.info(">>> [ " + percent + "% ]: " + message);
             }
 
             @Override
             public void initializationCompleted() {
-                System.out.println("Tor is ready to go!");
+                logger.info("Tor is ready to go!");
                 isRunning = true;
                 isStarting = false;
             }
