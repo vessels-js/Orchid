@@ -9,7 +9,7 @@ public class GrabPost {
 
     public static void main(String[] args) throws Exception {
         try{
-            String url = "http://putsreq.com/NOFo0RJDXusEi760rmrE";
+            String url = "http://putsreq.com/pJ0XmJetHeDcMAWgC8gM";
             List<NameValuePair> params = new ArrayList();
             params.add(NameValuePair.getInstance("name","tor"));
 
