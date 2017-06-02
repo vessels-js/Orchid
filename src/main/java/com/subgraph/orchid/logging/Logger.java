@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 public class Logger {
     private static final SimpleDateFormat LOG_TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+    private static SysLog LOGGING_THRESHOLD = SysLog.DEBUG;
     private final Class aClass;
     
     private Logger(Class aClass){
@@ -15,12 +16,23 @@ public class Logger {
         return new Logger(aClass);
     }
     
+    public static void setLoggingThreshold(SysLog level){
+        LOGGING_THRESHOLD = level;
+    }
+    
+    private boolean shouldLog(SysLog level){
+        return level.isGreaterOrEqual(LOGGING_THRESHOLD);
+    }
+    
     public void debug(Object message){
         debug(message, null);
     }
     
     public void debug(Object message, Throwable throwable){
-        System.out.println(constrctLogMessage("DEBUG", message, throwable));
+        SysLog level = SysLog.DEBUG;
+        if(shouldLog(level)){
+            System.out.println(constrctLogMessage("DEBUG", message, throwable));
+        }
     }
     
     public void warn(Object message){
@@ -28,7 +40,10 @@ public class Logger {
     }
     
     public void warn(Object message, Throwable throwable){
-        System.out.println(constrctLogMessage("WARN", message, throwable));
+        SysLog level = SysLog.WARNING;
+        if(shouldLog(level)){
+            System.out.println(constrctLogMessage("WARN", message, throwable));
+        }
     }
     
     public void info(Object message){
@@ -36,7 +51,10 @@ public class Logger {
     }
     
     public void info(Object message, Throwable throwable){
-        System.out.println(constrctLogMessage("INFO", message, throwable));
+        SysLog level = SysLog.INFORMATIONAL;
+        if(shouldLog(level)){
+            System.out.println(constrctLogMessage("INFO", message, throwable));
+        }
     }
     
     public void error(Object message){
@@ -44,7 +62,10 @@ public class Logger {
     }
     
     public void error(Object message, Throwable throwable){
-        System.out.println(constrctLogMessage("ERROR", message, throwable));
+        SysLog level = SysLog.ERROR;
+        if(shouldLog(level)){
+            System.out.println(constrctLogMessage("ERROR", message, throwable));
+        }
     }
     
     public void fatal(Object message){
@@ -52,7 +73,10 @@ public class Logger {
     }
     
     public void fatal(Object message, Throwable throwable){
-        System.out.println(constrctLogMessage("FATAL", message, throwable));
+        SysLog level = SysLog.EMERGENCY;
+        if(shouldLog(level)){
+            System.out.println(constrctLogMessage("FATAL", message, throwable));
+        }
     }
     
     private String constrctLogMessage(String level, Object message, Throwable throwable){
