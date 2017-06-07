@@ -1,9 +1,11 @@
 package com.subgraph.orchid.http;
 
+import com.subgraph.orchid.logging.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class StreamReader {
+    private static final Logger logger = Logger.getInstance(StreamReader.class);
     public static String read(InputStream stream) {
         StringBuilder value = new StringBuilder();
         int character;
@@ -12,7 +14,7 @@ public class StreamReader {
                 value.append((char)character);
             }
         } catch(Exception e){
-            System.out.println("ERROR!!! "+e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage(), e);
         } finally{
             try{
                 stream.close();

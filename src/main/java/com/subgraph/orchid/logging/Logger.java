@@ -1,11 +1,11 @@
 package com.subgraph.orchid.logging;
 
+import com.demo.ApplicationProperties;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Logger {
     private static final SimpleDateFormat LOG_TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-    private static SysLog LOGGING_THRESHOLD = SysLog.DEBUG;
     private final Class aClass;
     
     private Logger(Class aClass){
@@ -16,12 +16,8 @@ public class Logger {
         return new Logger(aClass);
     }
     
-    public static void setLoggingThreshold(SysLog level){
-        LOGGING_THRESHOLD = level;
-    }
-    
     private boolean shouldLog(SysLog level){
-        return level.isGreaterOrEqual(LOGGING_THRESHOLD);
+        return level.isGreaterOrEqual(ApplicationProperties.loggingThreshold());
     }
     
     public void debug(Object message){
