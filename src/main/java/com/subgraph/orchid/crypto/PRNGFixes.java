@@ -10,6 +10,7 @@ package com.subgraph.orchid.crypto;
  * freely, as long as the origin is not misrepresented.
  */
 
+import com.subgraph.orchid.logging.Logger;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,7 +25,6 @@ import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.SecureRandomSpi;
 import java.security.Security;
-import java.util.logging.Logger;
 
 /**
  * Fixes for the output of the default PRNG having low entropy.
@@ -34,8 +34,7 @@ import java.util.logging.Logger;
  * application's {@code onCreate}.
  */
 public final class PRNGFixes {
-
-	private final static Logger logger = Logger.getLogger(PRNGFixes.class.getName());
+    private static final Logger logger = Logger.getInstance(PRNGFixes.class);
 	
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
@@ -146,9 +145,9 @@ public final class PRNGFixes {
      */
     private static class LinuxPRNGSecureRandomProvider extends Provider {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		public LinuxPRNGSecureRandomProvider() {
+        public LinuxPRNGSecureRandomProvider() {
             super("LinuxPRNG",
                     1.0,
                     "A Linux-specific random number provider that uses"
@@ -179,11 +178,10 @@ public final class PRNGFixes {
          * serialized (on sLock) to ensure that multiple threads do not get
          * duplicated PRNG output.
          */
-
      
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		private static final File URANDOM_FILE = new File("/dev/urandom");
+        private static final File URANDOM_FILE = new File("/dev/urandom");
 
         private static final Object sLock = new Object();
 
@@ -222,7 +220,7 @@ public final class PRNGFixes {
             } catch (IOException e) {
                 // On a small fraction of devices /dev/urandom is not writable.
                 // Log and ignore.
-                logger.warning("Failed to mix seed into " + URANDOM_FILE);
+                logger.warn("Failed to mix seed into " + URANDOM_FILE);
             } finally {
                 mSeeded = true;
             }
@@ -315,7 +313,7 @@ public final class PRNGFixes {
         // We're using the Reflection API because Build.SERIAL is only available
         // since API Level 9 (Gingerbread, Android 2.3).
         try {
-        	return (String) Class.forName("android.os.Build").getField("SERIAL").get(null);
+            return (String) Class.forName("android.os.Build").getField("SERIAL").get(null);
             //return (String) Build.class.getField("SERIAL").get(null);
         } catch (Exception ignored) {
             return null;
@@ -324,19 +322,19 @@ public final class PRNGFixes {
     
     private static int getSdkVersion() {
     	try {
-			return Class.forName("android.os.Build").getField("VERSION").getClass().getField("SDK_INT").getInt(null);
-		} catch (Exception e) {
-			logger.warning("Could not get Build.VERSION.SDK_INT value : "+ e);
-			return 0;
-		} 
+            return Class.forName("android.os.Build").getField("VERSION").getClass().getField("SDK_INT").getInt(null);
+        } catch (Exception e) {
+            logger.warn("Could not get Build.VERSION.SDK_INT value : "+ e);
+            return 0;
+        } 
     }
     
     private static String getBuildFingerprint() {
     	try {
-    		return (String) Class.forName("android.os.Build").getField("FINGERPRINT").get(null);
+            return (String) Class.forName("android.os.Build").getField("FINGERPRINT").get(null);
     	} catch (Exception e) {
-    		logger.warning("Could not get BUILD.FINGERPRINT value : "+ e);
-    		return "";
+            logger.warn("Could not get BUILD.FINGERPRINT value : "+ e);
+            return "";
     	}
     }
 
