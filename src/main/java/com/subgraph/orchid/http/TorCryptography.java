@@ -1,5 +1,6 @@
 package com.subgraph.orchid.http;
 
+import com.subgraph.orchid.logging.Logger;
 import java.lang.reflect.Field;
 import java.security.Permission;
 import java.security.PermissionCollection;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.crypto.Cipher;
 
 public class TorCryptography {
+    private static final Logger logger = Logger.getInstance(TorCryptography.class);
     
     public static boolean hasRestrictedCryptography(){
 	try {
@@ -48,7 +50,7 @@ public class TorCryptography {
                 instance.setAccessible(true);
                 defaultPolicy.add((Permission) instance.get(null));
             } catch (final Exception e) {
-                // Swallow. If we can not bypass restrictions then let Orchid throw an error.
+                logger.error("Unable to bypass JCE Unlimited Strength Jurisdiction policy files.", e);
             }
         }
     }
