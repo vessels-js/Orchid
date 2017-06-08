@@ -17,7 +17,7 @@ public class Logger {
     }
     
     private boolean shouldLog(SysLog level){
-        return level.isGreaterOrEqual(ApplicationProperties.loggingThreshold());
+        return level.isGreaterOrEqual(ApplicationProperties.getLoggingThreshold());
     }
     
     public void debug(Object message){

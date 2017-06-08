@@ -38,7 +38,7 @@ public class HttpConnection {
     private ByteBuffer messageBody;
 
     public HttpConnection(Stream stream) {
-        this(stream, ApplicationProperties.useCompressionWhenDownloadingDirectoryData());
+        this(stream, ApplicationProperties.getUseCompression());
     }
 
     public HttpConnection(Stream stream, boolean useCompression) {
