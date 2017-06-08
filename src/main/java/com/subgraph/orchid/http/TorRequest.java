@@ -47,7 +47,6 @@ public abstract class TorRequest {
             request.executeRequest();
             response = HttpResponse.getInstance(request);
             currentRetryAttempts++;
-            System.out.println("sdjkhfsafkj");
         }
     }
     
