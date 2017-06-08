@@ -57,7 +57,7 @@ public class TorSocketHttpsPost extends TorSocketStream {
             }
             inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
             if(!sslSocket.getSession().isValid()){
-                throw new Exception("SSL Session is not valid. Try setting the TorRequest's SslContext to TorRequest.IGNORE_SSL_CERTIFICATES.");
+                throw new Exception("SSL Session is not valid. Either import the SSL Certificate; configure ApplicationProperties.setEnforceSslCertificates(false); or configure [TorRequest].setEnforceSslCertificates(false);");
             }
         } finally{
             sslSocket.close();

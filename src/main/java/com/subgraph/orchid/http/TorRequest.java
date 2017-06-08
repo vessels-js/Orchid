@@ -1,5 +1,6 @@
 package com.subgraph.orchid.http;
 
+import com.demo.ApplicationProperties;
 import com.subgraph.orchid.http.get.TorGetRequest;
 import com.subgraph.orchid.http.post.TorPostRequest;
 import com.subgraph.orchid.http.ssl.EnforceSslCertificates;
@@ -8,13 +9,11 @@ import java.util.List;
 import javax.net.ssl.SSLContext;
 
 public abstract class TorRequest {
-    public static final SSLContext ENFORCE_SSL_CERTIFICATES = EnforceSslCertificates.getSSLContext();
-    public static final SSLContext IGNORE_SSL_CERTIFICATES = IgnoreSslCertificates.getSSLContext();
     protected final String url;
-    protected SSLContext sslContext = ENFORCE_SSL_CERTIFICATES;
     protected int maxRetryAttempts = 3;
     protected TorSocketStream request;
     protected HttpResponse response;
+    private boolean enforceSslCertificates = ApplicationProperties.getEnforceSslCertificates();
     
     protected TorRequest(String url){
         this.url = url;
@@ -63,8 +62,16 @@ public abstract class TorRequest {
         return this;
     }
 
-    public TorRequest setSslContext(SSLContext sslContext) {
-        this.sslContext = sslContext;
+    public SSLContext getSslContext() {
+        if(enforceSslCertificates){
+            return EnforceSslCertificates.getSSLContext();
+        } else{
+            return IgnoreSslCertificates.getSSLContext();
+        }
+    }
+    
+    public TorRequest setEnforceSslCertificates(Boolean enforceSslCertificates){
+        this.enforceSslCertificates = enforceSslCertificates;
         return this;
     }
 }

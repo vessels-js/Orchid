@@ -1,5 +1,6 @@
 package com.subgraph.orchid.http.ssl;
 
+import com.demo.ApplicationProperties;
 import com.subgraph.orchid.logging.Logger;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -11,20 +12,12 @@ import java.security.cert.CertificateFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
-import java.util.*;
 
 public class EnforceSslCertificates {
     private static final Logger logger = Logger.getInstance(EnforceSslCertificates.class);
-    private static final KeyStore KEY_STORE;
-    private static final List<ExportedCertificate> EXPORTED_CERTIFICATES;
-    
-    static {
-        EXPORTED_CERTIFICATES = new ArrayList();
-        EXPORTED_CERTIFICATES.add(ExportedCertificate.getInstance("/com/subgraph/orchid/http/ssl/certificates/", "DSTRootCAX3", "der"));
-        EXPORTED_CERTIFICATES.add(ExportedCertificate.getInstance("/com/subgraph/orchid/http/ssl/certificates/", "StartComCertificationAuthority", "der"));
-    }
-    
-    static {
+    private static KeyStore KEY_STORE;
+
+    static{
         KeyStore keyStore = null;
         try {
             keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -32,12 +25,12 @@ public class EnforceSslCertificates {
             keyStore.load(new FileInputStream(ksPath.toFile()),"changeit".toCharArray());
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            for(ExportedCertificate exportedCertificate : EXPORTED_CERTIFICATES){
+            for(ExportedCertificate exportedCertificate : ApplicationProperties.getAdditionalSslCertificates()){
                 InputStream caInput = null;
                 try{
-                    caInput = new BufferedInputStream(EnforceSslCertificates.class.getResourceAsStream(exportedCertificate.path+exportedCertificate.name+"."+exportedCertificate.extension));
+                    caInput = new BufferedInputStream(EnforceSslCertificates.class.getResourceAsStream(exportedCertificate.getPath()+exportedCertificate.getName()+"."+exportedCertificate.getExtension()));
                     Certificate crt = cf.generateCertificate(caInput);
-                    keyStore.setCertificateEntry(exportedCertificate.name, crt);
+                    keyStore.setCertificateEntry(exportedCertificate.getName(), crt);
                 } finally{
                     if(caInput!=null){
                         caInput.close();
@@ -45,7 +38,7 @@ public class EnforceSslCertificates {
                 }
             }
         } catch (Exception e) {
-            logger.error("UNable to export ssl certificates.", e);
+            logger.error("Unable to export ssl certificates.", e);
         } finally{
             KEY_STORE = keyStore;
         }
@@ -61,22 +54,6 @@ public class EnforceSslCertificates {
             return sslContext;
         } catch(Exception e){
             return null;
-        }
-    }
-    
-    private static class ExportedCertificate{
-        private final String extension;
-        private final String name;
-        private final String path;
-        
-        private ExportedCertificate(String path, String name, String extension){
-            this.extension = extension;
-            this.name = name;
-            this.path = path;
-        }
-        
-        public static ExportedCertificate getInstance(String path, String name, String extension){
-            return new ExportedCertificate(path, name, extension);
         }
     }
 }

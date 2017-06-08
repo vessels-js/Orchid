@@ -19,7 +19,7 @@ public class TorPostRequest extends TorRequest{
     @Override
     public void executeRequest() throws Exception{
         if(url.toLowerCase().startsWith("https")){
-            request = TorSocketHttpsPost.getInstance(url, params, sslContext);
+            request = TorSocketHttpsPost.getInstance(url, params, super.getSslContext());
         } else{
             request = TorSocketHttpPost.getInstance(url, params);
         }

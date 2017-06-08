@@ -14,7 +14,7 @@ public class TorGetRequest extends TorRequest{
     @Override
     public void executeRequest() throws Exception{
         if(url.toLowerCase().startsWith("https")){
-            request = TorSocketHttpsGet.getInstance(url, sslContext);
+            request = TorSocketHttpsGet.getInstance(url, super.getSslContext());
         } else{
             request = TorSocketHttpGet.getInstance(url);
         }

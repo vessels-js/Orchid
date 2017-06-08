@@ -1,5 +1,6 @@
 package com.demo;
 
+import com.subgraph.orchid.http.ssl.ExportedCertificate;
 import com.subgraph.orchid.logging.SysLog;
 
 public class ApplicationProperties {
@@ -7,6 +8,7 @@ public class ApplicationProperties {
     private static final String VERSION = "1.0.0";
     private static SysLog LOGGING_THRESHOLD = SysLog.INFORMATIONAL;
     private static boolean USE_COMPRESSION = false;
+    private static boolean ENFORCE_SSL_CERTIFICATES = true;
     private static String[] TRUSTED_DIRECTORY_AUTHORITIES = {
         "authority moria1 orport=9101 v3ident=D586D18309DED4CD6D57C18FDB97EFA96D330566 128.31.0.39:9131 9695 DFC3 5FFE B861 329B 9F1A B04C 4639 7020 CE31",
         "authority tor26 orport=443 v3ident=14C131DFC5C6F93646BE72FA1401C02A8DF2E8B4 ipv6=[2001:858:2:2:aabb:0:563b:1526]:443 86.59.21.38:80 847B 1F85 0344 D787 6491 A548 92F9 0493 4E4E B85D",
@@ -17,6 +19,12 @@ public class ApplicationProperties {
         "authority maatuska orport=80 v3ident=49015F787433103580E3B66A1707A00E60F2D15B ipv6=[2001:67c:289c::9]:80 171.25.193.9:443 BD6A 8292 55CB 08E6 6FBE 7D37 4836 3586 E46B 3810",
         "authority Faravahar orport=443 v3ident=EFCBE720AB3A82B99F9E953CD5BF50F7EEFC7B97 154.35.175.225:80 CF6D 0AAF B385 BE71 B8E1 11FC 5CFF 4B47 9237 33BC",
         "authority longclaw orport=443 v3ident=23D15D965BC35114467363C165C4F724B64B4F66 ipv6=[2620:13:4000:8000:60:f3ff:fea1:7cff]:443 199.254.238.52:80 74A9 1064 6BCE EFBC D2E8 74FC 1DC9 9743 0F96 8145"
+    };
+    
+    //Import common SSL certificates that are not system defaults
+    private static ExportedCertificate[] ADDITIONAL_SSL_CERTIFICATES = {
+        ExportedCertificate.getInstance("/com/subgraph/orchid/http/ssl/certificates/", "DSTRootCAX3", "der"),
+        ExportedCertificate.getInstance("/com/subgraph/orchid/http/ssl/certificates/", "StartComCertificationAuthority", "der")
     };
     
     public static String getName(){
@@ -43,11 +51,27 @@ public class ApplicationProperties {
         USE_COMPRESSION = useCompression;
     }
     
+    public static boolean getEnforceSslCertificates(){
+        return ENFORCE_SSL_CERTIFICATES;
+    }
+    
+    public static void setEnforceSslCertificates(boolean enforceSslCertificates){
+        ENFORCE_SSL_CERTIFICATES = enforceSslCertificates;
+    }
+    
     public static String[] getTrustedDirectoryAuthorities(){
         return TRUSTED_DIRECTORY_AUTHORITIES;
     }
     
     public static void setTrustedDirectoryAuthorities(String[] trustedDirectoryAuthorities){
         TRUSTED_DIRECTORY_AUTHORITIES = trustedDirectoryAuthorities;
+    }
+    
+    public static ExportedCertificate[] getAdditionalSslCertificates(){
+        return ADDITIONAL_SSL_CERTIFICATES;
+    }
+    
+    public static void setAdditionalSslCertificates(ExportedCertificate[] additionalSslCertificates){
+        ADDITIONAL_SSL_CERTIFICATES = additionalSslCertificates;
     }
 }
