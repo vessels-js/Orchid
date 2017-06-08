@@ -1,5 +1,6 @@
 package com.subgraph.orchid;
 
+import com.demo.ApplicationProperties;
 import java.nio.charset.Charset;
 
 import com.subgraph.orchid.circuits.CircuitManagerImpl;
@@ -33,10 +34,6 @@ public class Tor {
     public final static int BOOTSTRAP_STATUS_CIRCUIT_CREATE = 90;
     public final static int BOOTSTRAP_STATUS_DONE = 100;
 
-
-    private final static String implementation = "Orchid";
-    private final static String version = "1.0.0";
-
     private final static Charset defaultCharset = createDefaultCharset();
 
     private static Charset createDefaultCharset() {
@@ -52,7 +49,7 @@ public class Tor {
     }
 
     public static String getImplementation() {
-        return implementation;
+        return ApplicationProperties.getName();
     }
 
     public static String getFullVersion() {
@@ -70,7 +67,7 @@ public class Tor {
      * @return A string representation of the software version.
      */
     public static String getVersion() {
-        return version;
+        return ApplicationProperties.getVersion();
     }
 
     /**
