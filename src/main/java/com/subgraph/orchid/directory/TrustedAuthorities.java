@@ -31,94 +31,95 @@ public class TrustedAuthorities {
     }
     
     private int countV3Servers() {
-    	int n = 0;
-    	for(DirectoryServer ds: directoryServers) {
-    		if(ds.getV3Identity() != null) {
-    			n += 1;
-    		}
-    	}
-    	return n;
+        int n = 0;
+        for(DirectoryServer ds: directoryServers) {
+            if(ds.getV3Identity() != null) {
+                n += 1;
+            }
+        }
+        return n;
     }
     
-	void initialize() {
-		final StringBuilder builder = new StringBuilder();
-		for(String entry: ApplicationProperties.getTrustedDirectoryAuthorities()) {
-			builder.append(entry);
-			builder.append('\n');
-		}
-		final ByteBuffer buffer = ByteBuffer.wrap(builder.toString().getBytes(Tor.getDefaultCharset()));
-		final DocumentFieldParser parser = new DocumentFieldParserImpl(buffer);
-		
-		parser.setHandler(new DocumentParsingHandler() {
-			public void endOfDocument() {}
-			public void parseKeywordLine() { processKeywordLine(parser);}
-		});
-		parser.processDocument();
-	}
-	
-	private void processKeywordLine(DocumentFieldParser fieldParser) {
-		final DirectoryAuthorityStatus status = new DirectoryAuthorityStatus();
-		status.setNickname(fieldParser.parseNickname());
-		while(fieldParser.argumentsRemaining() > 0) 
-			processArgument(fieldParser, status);
-	}
-	
-	private void processArgument(DocumentFieldParser fieldParser, DirectoryAuthorityStatus status) {
-		final String item = fieldParser.parseString();
-		if(Character.isDigit(item.charAt(0))) {
-			parseAddressPort(fieldParser, item, status);
-			status.setIdentity(fieldParser.parseFingerprint());
-			DirectoryServerImpl server = new DirectoryServerImpl(status);
-			if(status.getV3Ident() != null) {
-				server.setV3Ident(status.getV3Ident());
-			}
-			fieldParser.logDebug("Adding trusted authority: " + server);
-			directoryServers.add(server);
-			return;
-		} else {
-			parseFlag(fieldParser, item, status);
-		}
-	}
-	
-	private void parseAddressPort(DocumentFieldParser parser, String item, DirectoryAuthorityStatus status) {
-		final String[] args = item.split(":");
-		status.setAddress(IPv4Address.createFromString(args[0]));
-		status.setDirectoryPort(parser.parsePort(args[1]));	
-	}
-	
-	private void parseFlag(DocumentFieldParser parser, String flag, DirectoryAuthorityStatus status) {
-		if(flag.equals("v1")) {
-			status.setV1Authority();
-			status.setHiddenServiceAuthority();
-		} else if(flag.equals("hs")) {
-			status.setHiddenServiceAuthority();
-		} else if(flag.equals("no-hs")) {
-			status.unsetHiddenServiceAuthority();
-		} else if(flag.equals("bridge")) {
-			status.setBridgeAuthority();
-		} else if(flag.equals("no-v2")) {
-			status.unsetV2Authority();
-		} else if(flag.startsWith("orport=")) {
-			status.setRouterPort( parser.parsePort(flag.substring(7)));
-		} else if(flag.startsWith("v3ident=")) {
-			status.setV3Ident(HexDigest.createFromString(flag.substring(8)));
-		}
-	}
-	
-	public int getV3AuthorityServerCount() {
-		return v3ServerCount;
-	}
+    void initialize() {
+        final StringBuilder builder = new StringBuilder();
+        for(String entry: ApplicationProperties.getTrustedDirectoryAuthorities()) {
+            builder.append(entry);
+            builder.append('\n');
+        }
+        final ByteBuffer buffer = ByteBuffer.wrap(builder.toString().getBytes(Tor.getDefaultCharset()));
+        final DocumentFieldParser parser = new DocumentFieldParserImpl(buffer);
 
-	public List<DirectoryServer> getAuthorityServers() {
-		return directoryServers;
-	}
+        parser.setHandler(new DocumentParsingHandler() {
+            public void endOfDocument() {}
+            public void parseKeywordLine() { processKeywordLine(parser);}
+        });
+        parser.processDocument();
+    }
+	
+    private void processKeywordLine(DocumentFieldParser fieldParser) {
+        final DirectoryAuthorityStatus status = new DirectoryAuthorityStatus();
+        status.setNickname(fieldParser.parseNickname());
+        while(fieldParser.argumentsRemaining() > 0) {
+                processArgument(fieldParser, status);
+        }
+    }
+	
+    private void processArgument(DocumentFieldParser fieldParser, DirectoryAuthorityStatus status) {
+        final String item = fieldParser.parseString();
+        if(Character.isDigit(item.charAt(0))) {
+            parseAddressPort(fieldParser, item, status);
+            status.setIdentity(fieldParser.parseFingerprint());
+            DirectoryServerImpl server = new DirectoryServerImpl(status);
+            if(status.getV3Ident() != null) {
+                    server.setV3Ident(status.getV3Ident());
+            }
+            fieldParser.logDebug("Adding trusted authority: " + server);
+            directoryServers.add(server);
+            return;
+        } else {
+            parseFlag(fieldParser, item, status);
+        }
+    }
+	
+    private void parseAddressPort(DocumentFieldParser parser, String item, DirectoryAuthorityStatus status) {
+        final String[] args = item.split(":");
+        status.setAddress(IPv4Address.createFromString(args[0]));
+        status.setDirectoryPort(parser.parsePort(args[1]));	
+    }
+	
+    private void parseFlag(DocumentFieldParser parser, String flag, DirectoryAuthorityStatus status) {
+        if(flag.equals("v1")) {
+            status.setV1Authority();
+            status.setHiddenServiceAuthority();
+        } else if(flag.equals("hs")) {
+            status.setHiddenServiceAuthority();
+        } else if(flag.equals("no-hs")) {
+            status.unsetHiddenServiceAuthority();
+        } else if(flag.equals("bridge")) {
+            status.setBridgeAuthority();
+        } else if(flag.equals("no-v2")) {
+            status.unsetV2Authority();
+        } else if(flag.startsWith("orport=")) {
+            status.setRouterPort( parser.parsePort(flag.substring(7)));
+        } else if(flag.startsWith("v3ident=")) {
+            status.setV3Ident(HexDigest.createFromString(flag.substring(8)));
+        }
+    }
+	
+    public int getV3AuthorityServerCount() {
+        return v3ServerCount;
+    }
 
-	public DirectoryServer getAuthorityServerByIdentity(HexDigest identity) {
-		for(DirectoryServer ds: directoryServers) {
-			if(identity.equals(ds.getV3Identity())) {
-				return ds;
-			}
-		}
-		return null;
-	}
+    public List<DirectoryServer> getAuthorityServers() {
+        return directoryServers;
+    }
+
+    public DirectoryServer getAuthorityServerByIdentity(HexDigest identity) {
+        for(DirectoryServer ds: directoryServers) {
+            if(identity.equals(ds.getV3Identity())) {
+                return ds;
+            }
+        }
+        return null;
+    }
 }
