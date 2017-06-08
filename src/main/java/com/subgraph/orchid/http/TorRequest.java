@@ -41,10 +41,13 @@ public abstract class TorRequest {
         }
 
         request.executeRequest();
+        response = HttpResponse.getInstance(request);
         int currentRetryAttempts = 0;
-        while(currentRetryAttempts<maxRetryAttempts && (response = HttpResponse.getInstance(request)).getStatusLine().getStatusCode()>399){
+        while(currentRetryAttempts<maxRetryAttempts && response.getStatusLine().getStatusCode()>399){
             request.executeRequest();
+            response = HttpResponse.getInstance(request);
             currentRetryAttempts++;
+            System.out.println("sdjkhfsafkj");
         }
     }
     
