@@ -63,7 +63,7 @@ The Orchid Tor client exposes a SocketFactory that can be used within a JVM appl
 
 Orchid was originally developed by [Bruce Leidl](https://github.com/brl) of [Subgraph](https://subgraph.com/).  The original web page can be found [here](https://subgraph.com/orchid/).  This README borrows heavily from there.
 
-This fork is currently maintained by [Masayuki Hatta](http://about.me/mhatta).
+This fork is currently maintained by [Masayuki Hatta](http://about.me/mhatta)([@mhatta](https://twitter.com/mhatta)).
 
 ## Acknowledgements
 
