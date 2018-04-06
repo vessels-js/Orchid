@@ -9,7 +9,7 @@ It was written from the Tor specification documents, which are available [here](
 
 ## Example
 
-'''
+```
 2018-04-06 04:06:10,458 INFO - TorClient - Starting Orchid (version: 1.0.0)
 2018-04-06 04:06:10,461 INFO - DirectoryImpl - Loading cached network information from disk
 2018-04-06 04:06:10,461 INFO - DirectoryImpl - Loading certificates
@@ -58,5 +58,4 @@ erver
 2018-04-06 04:28:14,594 INFO - TorClient - >>> [ 90% ]: Establishing a Tor circuit
 2018-04-06 04:28:15,362 INFO - TorClient - >>> [ 100% ]: Done
 2018-04-06 04:28:15,362 INFO - TorClient - Tor is ready to go!
-
-'''
+```
