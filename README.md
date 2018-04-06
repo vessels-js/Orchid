@@ -31,7 +31,7 @@ gradle fatJar
 
 will produce a fat JAR, which contains both classes and dependencies needed to run Orchid as a standalone client.
 
-You may find pre-built JARs in [Releases]().
+You may find prebuilt JARs in [Releases](https://github.com/mhatta/Orchid/releases).
 
 ## How to run
 
