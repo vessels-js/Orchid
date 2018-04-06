@@ -17,7 +17,7 @@ Orchid can also be used as a library by any application running on the JVM. This
 
 ## How to build
 
-Orchid uses Gradle.  Currently tested with Java 8 on Debian sid (openjdk-8-jdk).
+Now Orchid uses [Gradle](https://gradle.org/) as its build system.  Currently tested with Java 8 on Debian sid (openjdk-8-jdk).
 
 ```
 gradle build
@@ -39,7 +39,9 @@ To start the Orchid SOCKS5 proxy, perform the following:
 java -jar Orchid-v1.0.0.jar
 ```
 
-To test Orchid, you can tell your web browser to use Orchid as a SOCKS5 proxy (the default listening port is 9150) - however it is important to note that Orchid + your browser isn't a secure replacement for [the Tor Browser Bundle](https://www.torproject.org/projects/torbrowser.htm), which has many other enhancements beyond Tor. For example, with Firefox, by default, DNS lookups are not sent over a configured SOCKS5 proxy. You can change this potentially de-anonymizing default configuration by going to the URL about:config and setting the property network.proxy.socks_remote_dns to true (this is already done in the Tor Browser).
+To test Orchid, you can tell your web browser to use Orchid as a SOCKS5 proxy (the default listening port is `9150`) - however it is important to note that Orchid + your browser isn't a secure replacement for [the Tor Browser Bundle](https://www.torproject.org/projects/torbrowser.htm), which has many other enhancements beyond Tor.
+
+For example, with Mozilla Firefox, by default, DNS lookups are not sent over a configured SOCKS5 proxy. You can change this potentially de-anonymizing default configuration by going to the URL `about:config` and setting the property `network.proxy.socks_remote_dns` to `true` (this is already done in the Tor Browser).
 
 ## Using the dashboard
 
@@ -49,13 +51,27 @@ Orchid also includes a "dashboard" feature to observe information about the inte
 java -Dcom.subgraph.orchid.dashboard.port=10000 Orchid-v1.0.0.jar
 ```
 
-To access the dashboard, just connect to the port (for this example 10000) with netcat.
+To access the dashboard, just connect to the port (for this example `10000`) with netcat.
+
+## How to use as a library
+
+The Orchid Tor client exposes a SocketFactory that can be used within a JVM application. More detailed documentation and code examples are coming very soon.
+
+
 
 ## Authors
 
-Orchid was originally developed by [Bruce Leidl](https://github.com/brl) of [Subgraph](https://subgraph.com/).  The original webpage can be found [here](https://subgraph.com/orchid/).  This README borrows heavily from there.
+Orchid was originally developed by [Bruce Leidl](https://github.com/brl) of [Subgraph](https://subgraph.com/).  The original web page can be found [here](https://subgraph.com/orchid/).  This README borrows heavily from there.
 
 This fork is currently maintained by [Masayuki Hatta](http://about.me/mhatta).
+
+## Contributors
+
+The current Orchid has been incorporated with various improvements from the following projects/people:
+
+* [bitcoinj](https://github.com/bitcoinj)
+* [geo-gs](https://github.com/geo-gs)
+* [peergos](https://github.com/peergos)
 
 ## License
 
@@ -71,14 +87,11 @@ A typical Orchid run will output something like this:
 2018-04-06 04:06:10,461 INFO - DirectoryImpl - Loading cached network information from disk
 2018-04-06 04:06:10,461 INFO - DirectoryImpl - Loading certificates
 2018-04-06 04:06:15,582 INFO - DirectoryImpl - Loading consensus
-2018-04-06 04:06:15,615 WARN - DirectoryImpl - Unable to verify signatures on co
-nsensus document, discarding...
+2018-04-06 04:06:15,615 WARN - DirectoryImpl - Unable to verify signatures on consensus document, discarding...
 2018-04-06 04:06:15,615 INFO - DirectoryImpl - Loading microdescriptor cache
 2018-04-06 04:06:15,616 INFO - DirectoryImpl - loading state file
-2018-04-06 04:06:15,617 INFO - DirectoryDownloadTask - Downloading consensus bec
-ause we have no consensus document
-2018-04-06 04:06:15,713 INFO - TorClient - >>> [ 5% ]: Connecting to directory s
-erver
+2018-04-06 04:06:15,617 INFO - DirectoryDownloadTask - Downloading consensus because we have no consensus document
+2018-04-06 04:06:15,713 INFO - TorClient - >>> [ 5% ]: Connecting to directory server
 2018-04-06 04:06:15,947 INFO - TorClient - >>> [ 10% ]: Finishing handshake with
  directory server
 2018-04-06 04:10:12,024 INFO - TorClient - >>> [ 15% ]: Establishing an encrypted directory connection
@@ -96,4 +109,4 @@ erver
 2018-04-06 04:28:15,362 INFO - TorClient - Tor is ready to go!
 ```
 
-There will be a lot of `INFO - CircuitCreationTask - Cannot build circuits because we don't have enough directory information` warnings and pauses during the session,  It is usually OK, be patient.  The first time run will take much longer time than the sessions hereafter.
+There will be a lot of `INFO - CircuitCreationTask - Cannot build circuits because we don't have enough directory information` warnings and pauses during the session.  It is usually OK, be patient.  The first time run will take much longer time than the sessions hereafter.
