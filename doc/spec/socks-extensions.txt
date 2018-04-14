@@ -26,13 +26,20 @@ Tor's extensions to the SOCKS protocol
   - The BIND command is not supported.
 
   SOCKS4,4A:
-  - SOCKS4 usernames are ignored.
+  - SOCKS4 usernames are used to implement stream isolation.
 
   SOCKS5:
   - The (SOCKS5) "UDP ASSOCIATE" command is not supported.
   - IPv6 is not supported in CONNECT commands.
-  - Only the "NO AUTHENTICATION" (SOCKS5) authentication method [00] is
-    supported.
+  - The "NO AUTHENTICATION REQUIRED" (SOCKS5) authentication method [00] is
+    supported; and as of Tor 0.2.3.2-alpha, the "USERNAME/PASSWORD" (SOCKS5)
+    authentication method [02] is supported too, and used as a method to
+    implement stream isolation. As an extension to support some broken clients,
+    we allow clients to pass "USERNAME/PASSWORD" authentication to us even if
+    no authentication was selected.
+
+  (For more information on stream isolation, see IsolateSOCKSAuth on the Tor
+  manpage.)
 
 2. Name lookup
 
@@ -71,8 +78,21 @@ Tor's extensions to the SOCKS protocol
   misconfigured.  This is helpful for the many users who mistakenly try to
   use Tor as an HTTP proxy instead of a SOCKS proxy.
 
+5. Optimistic data
+
+  Tor allows SOCKS clients to send connection data before Tor has sent a
+  SOCKS response.  When using an exit node that supports "optimistic data",
+  Tor will send such data to the server without waiting to see whether the
+  connection attempt succeeds.  This behavior can save a single round-trip
+  time when starting connections with a protocol where the client speaks
+  first (like HTTP).  Clients that do this must be ready to hear that
+  their connection has succeeded or failed _after_ they have sent the
+  data.
+
+
+
 References:
- [1] http://archive.socks.permeo.com/protocol/socks4.protocol
- [2] http://archive.socks.permeo.com/protocol/socks4a.protocol
+ [1] http://en.wikipedia.org/wiki/SOCKS#SOCKS4
+ [2] http://en.wikipedia.org/wiki/SOCKS#SOCKS4a
  [3] SOCKS5: RFC1928
 
