@@ -17,7 +17,7 @@ Orchid can also be used as a library by any application running on the JVM. This
 
 ## How to build
 
-Now Orchid uses [Gradle](https://gradle.org/) as its build system.  Currently tested with Java 8 on Debian sid (openjdk-8-jdk).
+Now Orchid uses [Gradle](https://gradle.org/) as its build system.  Currently tested with both Java 8 and 9 on Debian sid (openjdk-8-jdk / openjdk-9-jdk).
 
 ```
 gradle build
@@ -32,6 +32,8 @@ gradle fatJar
 will produce a fat JAR, which contains both classes and dependencies needed to run Orchid as a standalone client.
 
 You may find prebuilt JARs in [Releases](https://github.com/mhatta/Orchid/releases).
+
+The old Ant build system is still available, but for Java 8 only.
 
 ## How to run
 
@@ -57,13 +59,13 @@ To access the dashboard, just connect to the port (for this example `10000`) wit
 
 ## How to use as a library
 
-The Orchid Tor client exposes a SocketFactory that can be used within a JVM application. More detailed documentation and code examples are coming very soon.
+The Orchid Tor client exposes a SocketFactory that can be used within a JVM application. More detailed documentation and code examples are coming very soon.  [Tthis Stack Overflow discussion](https://stackoverflow.com/questions/29171643/java-tor-lib-how-to-setup-orchid-tor-lib-with-java) might be helpful for now.
 
 ## Authors
 
 Orchid was originally developed by [Bruce Leidl](https://github.com/brl) of [Subgraph](https://subgraph.com/).  The original web page can be found [here](https://subgraph.com/orchid/).  This README borrows heavily from there.
 
-This fork is currently maintained by [Masayuki Hatta](http://about.me/mhatta)([@mhatta](https://twitter.com/mhatta)).
+This fork is currently maintained by [Masayuki Hatta](http://about.me/mhatta) ([@mhatta](https://twitter.com/mhatta)).
 
 ## Acknowledgements
 
