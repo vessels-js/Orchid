@@ -44,6 +44,7 @@
 			
   <target name="clean">
     <delete dir="${basedir}/bin" />
+    <delete file="build-revision" />
   </target>
 
   <target name="write-revision">
@@ -86,6 +87,8 @@
       -libraryjars "${java.home}/lib/rt.jar"
       -libraryjars "${java.home}/lib/jce.jar"
       -libraryjars lib/jsr305.jar
+      -libraryjars lib/xmlrpc-common-3.1.3.jar
+      -libraryjars lib/xmlrpc-client-3.1.3.jar
       -libraryjars lib/testing/
       -outjars ${orchid.basename}-full.jar
       -dontoptimize
