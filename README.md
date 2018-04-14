@@ -33,7 +33,7 @@ will produce a fat JAR, which contains both classes and dependencies needed to r
 
 You may find prebuilt JARs in [Releases](https://github.com/mhatta/Orchid/releases).
 
-The old Ant build system is still available, but for Java 8 only.
+The old Ant build system is still available, but works with Java 8 only.
 
 ## How to run
 
