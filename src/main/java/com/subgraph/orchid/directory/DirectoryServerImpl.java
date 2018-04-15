@@ -76,8 +76,12 @@ public class DirectoryServerImpl extends RouterImpl implements DirectoryServer {
         return v3Ident;
     }
 
+    /**
+     * https://github.com/geo-gs/Orchid/commit/22beeae1b881707491addaba6a7654e9de9f9db1
+     */
     @Override
     public KeyCertificate getCertificateByAuthority(HexDigest fingerprint){
+
         for(KeyCertificate kc: getCertificates()) {
             if(kc.getAuthorityFingerprint().equals(fingerprint)) {
                 return kc;

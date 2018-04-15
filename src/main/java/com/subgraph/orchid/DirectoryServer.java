@@ -15,8 +15,11 @@ public interface DirectoryServer extends Router {
 	boolean isHiddenServiceAuthority();
 	boolean isBridgeAuthority();
 	boolean isExtraInfoCache();
-	
-	KeyCertificate getCertificateByAuthority(HexDigest fingerprint);
+
+        /**
+         * https://github.com/geo-gs/Orchid/commit/22beeae1b881707491addaba6a7654e9de9f9db1
+         */
+        KeyCertificate getCertificateByAuthority(HexDigest fingerprint);
 	KeyCertificate getCertificateByFingerprint(HexDigest fingerprint);
 	List<KeyCertificate> getCertificates();
 	void addCertificate(KeyCertificate certificate);
