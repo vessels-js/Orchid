@@ -40,7 +40,7 @@ public class ConnectionHandshakeV3 extends ConnectionHandshake {
 		final Cell cell = expectCell(Cell.CERTS);
 		final int ncerts = cell.getByte();
 		if(ncerts != 2 && ncerts != 5) {
-			throw new ConnectionHandshakeException("Expecting 2 or 5certificates and got "+ ncerts);
+			throw new ConnectionHandshakeException("Expecting 2 or 5 certificates and got "+ ncerts);
 		}
 
 		linkCertificate = null;
