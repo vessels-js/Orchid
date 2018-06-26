@@ -17,7 +17,7 @@ Orchid can also be used as a library by any application running on the JVM. This
 
 ## How to build
 
-Now Orchid uses [Gradle](https://gradle.org/) as its build system.  Currently tested with both Java 8 and 9 on Debian sid (openjdk-8-jdk / openjdk-9-jdk).
+Now Orchid uses [Gradle](https://gradle.org/) as its build system.  Currently tested with both Java 8 and 10 on Debian sid (openjdk-8-jdk / openjdk-10-jdk).
 
 ```
 gradle build
@@ -40,7 +40,7 @@ The old Ant build system is still available, but works with Java 8 only.
 To start the Orchid SOCKS5 proxy, perform the following:
 
 ```
-java -jar Orchid-v1.0.1.jar
+java -jar Orchid-v1.0.2.jar
 ```
 
 To test Orchid, you can tell your web browser to use Orchid as a SOCKS5 proxy (the default listening port is `9150`) - however it is important to note that Orchid + your browser is **NOT** a secure replacement for [the Tor Browser Bundle](https://www.torproject.org/projects/torbrowser.htm), which has many other enhancements beyond Tor.
@@ -52,14 +52,14 @@ For example, with Mozilla Firefox, by default, DNS lookups are not sent over a c
 Orchid also includes a "dashboard" feature to observe information about the internal state of Tor. To start the dashboard, set the following property when the JAR is run like:
 
 ```
-java -Dcom.subgraph.orchid.dashboard.port=10000 Orchid-v1.0.1.jar
+java -Dcom.subgraph.orchid.dashboard.port=10000 -jar Orchid-v1.0.2.jar
 ```
 
 To access the dashboard, just connect to the port (for this example `10000`) with netcat.
 
 ## How to use as a library
 
-The Orchid Tor client exposes a SocketFactory that can be used within a JVM application. More detailed documentation and code examples are coming very soon.  [Tthis Stack Overflow discussion](https://stackoverflow.com/questions/29171643/java-tor-lib-how-to-setup-orchid-tor-lib-with-java) might be helpful for now.
+The Orchid Tor client exposes a SocketFactory that can be used within a JVM application. More detailed documentation and code examples are coming very soon.  [This Stack Overflow discussion](https://stackoverflow.com/questions/29171643/java-tor-lib-how-to-setup-orchid-tor-lib-with-java) might be helpful for now.
 
 ## Authors
 
