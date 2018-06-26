@@ -1,19 +1,26 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 10
+targetCompatibility = 10
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 repositories {
+      mavenCentral()
 //    jcenter()
-      jcenter {url "http://jcenter.bintray.com" }
+//if https doesn't work    
+//    jcenter {url "http://jcenter.bintray.com" }
 }
 
 dependencies {
-    compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.7.2'
+//sync with versions included in Debian sid, if possible 
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile group: 'net.sf.proguard', name: 'proguard', version: '4.4'
     compile group: 'org.apache.xmlrpc', name: 'xmlrpc-common', version: '3.1.3'
     compile group: 'org.apache.xmlrpc', name: 'xmlrpc-client', version: '3.1.3'
-    compile 'com.google.guava:guava:18.0'
+//  compile fileTree(dir: 'lib', include: '*.jar')
 }
 
 sourceSets {
