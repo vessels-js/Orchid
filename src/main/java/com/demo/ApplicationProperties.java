@@ -5,7 +5,7 @@ import com.subgraph.orchid.logging.SysLog;
 
 public class ApplicationProperties {
     private static final String NAME = "Orchid";
-    private static final String VERSION = "1.0.4";
+    private static final String VERSION = "1.0.5";
     private static SysLog LOGGING_THRESHOLD = SysLog.INFORMATIONAL;
     private static boolean USE_COMPRESSION = false;
     private static boolean ENFORCE_SSL_CERTIFICATES = true;
