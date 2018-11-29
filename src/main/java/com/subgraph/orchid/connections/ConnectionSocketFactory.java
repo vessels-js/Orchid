@@ -22,6 +22,9 @@ public class ConnectionSocketFactory {
     };
     
     private static final String[] MANDATORY_CIPHERS = {
+	// The result of getSupportedCipherSuites() on OpenJDK 11
+	// minus DH_anon and NULL ciphers
+	// FIXME: blacklisting weak ciphers would be preferable
 	"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
 	"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
 	"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
@@ -65,26 +68,9 @@ public class ConnectionSocketFactory {
 	"TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
 	"TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
 	"TLS_EMPTY_RENEGOTIATION_INFO_SCSV",
-	"TLS_DH_anon_WITH_AES_256_GCM_SHA384",
-	"TLS_DH_anon_WITH_AES_128_GCM_SHA256",
-	"TLS_DH_anon_WITH_AES_256_CBC_SHA256",
-	"TLS_ECDH_anon_WITH_AES_256_CBC_SHA",
-	"TLS_DH_anon_WITH_AES_256_CBC_SHA",
-	"TLS_DH_anon_WITH_AES_128_CBC_SHA256",
-	"TLS_ECDH_anon_WITH_AES_128_CBC_SHA",
-	"TLS_DH_anon_WITH_AES_128_CBC_SHA",
 	"SSL_RSA_WITH_DES_CBC_SHA",
 	"SSL_DHE_RSA_WITH_DES_CBC_SHA",
 	"SSL_DHE_DSS_WITH_DES_CBC_SHA",
-	"SSL_DH_anon_WITH_DES_CBC_SHA",
-	"TLS_RSA_WITH_NULL_SHA256",
-	"TLS_ECDHE_ECDSA_WITH_NULL_SHA",
-	"TLS_ECDHE_RSA_WITH_NULL_SHA",
-	"SSL_RSA_WITH_NULL_SHA",
-	"TLS_ECDH_ECDSA_WITH_NULL_SHA",
-	"TLS_ECDH_RSA_WITH_NULL_SHA",
-	"TLS_ECDH_anon_WITH_NULL_SHA",
-	"SSL_RSA_WITH_NULL_MD5",
     };
 
 	private static final TrustManager[] NULL_TRUST = {
