@@ -40,7 +40,7 @@ The old Ant build system is still available, but works with Java 8 only.
 To start the Orchid SOCKS5 proxy, perform the following:
 
 ```
-java -jar Orchid-v1.0.5.jar
+java -jar Orchid-v1.0.6.jar
 ```
 
 To test Orchid, you can tell your web browser to use Orchid as a SOCKS5 proxy (the default listening port is `9150`) - however it is important to note that Orchid + your browser is **NOT** a secure replacement for [the Tor Browser Bundle](https://www.torproject.org/projects/torbrowser.htm), which has many other enhancements beyond Tor.
@@ -52,7 +52,7 @@ For example, with Mozilla Firefox, by default, DNS lookups are not sent over a c
 Orchid also includes a "dashboard" feature to observe information about the internal state of Tor. To start the dashboard, set the following property when the JAR is run like:
 
 ```
-java -Dcom.subgraph.orchid.dashboard.port=10000 -jar Orchid-v1.0.5.jar
+java -Dcom.subgraph.orchid.dashboard.port=10000 -jar Orchid-v1.0.6.jar
 ```
 
 To access the dashboard, just connect to the port (for this example `10000`) with netcat.
