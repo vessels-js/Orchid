@@ -23,7 +23,7 @@ public class ConnectionSocketFactory {
     
     private static final String[] MANDATORY_CIPHERS = {
 	// The result of getSupportedCipherSuites() on OpenJDK 11
-	// minus DH_anon and NULL ciphers
+	// minus <128bit weak, DH_anon and NULL ciphers
 	// FIXME: blacklisting weak ciphers would be preferable
 	"TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
 	"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
@@ -68,9 +68,6 @@ public class ConnectionSocketFactory {
 	"TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
 	"TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
 	"TLS_EMPTY_RENEGOTIATION_INFO_SCSV",
-	"SSL_RSA_WITH_DES_CBC_SHA",
-	"SSL_DHE_RSA_WITH_DES_CBC_SHA",
-	"SSL_DHE_DSS_WITH_DES_CBC_SHA",
     };
 
 	private static final TrustManager[] NULL_TRUST = {
