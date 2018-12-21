@@ -67,7 +67,6 @@ public class ConnectionSocketFactory {
 	"TLS_ECDH_RSA_WITH_AES_128_CBC_SHA",
 	"TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
 	"TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
-	"TLS_EMPTY_RENEGOTIATION_INFO_SCSV",
     };
 
 	private static final TrustManager[] NULL_TRUST = {
